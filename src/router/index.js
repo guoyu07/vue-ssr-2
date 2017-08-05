@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const Index = () => import('../views/index.vue')
+const root = (component) => () => import(`../views/${component}.vue`)
 
 export function createRouter() {
 
@@ -11,7 +11,7 @@ export function createRouter() {
     mode: 'history',
     scrollBehavior: () => ({y: 0}),
     routes: [
-      {path: '/', component: Index}
+      {path: '/', component: root('index')}
     ]
   })
 }

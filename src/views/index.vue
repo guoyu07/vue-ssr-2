@@ -1,25 +1,35 @@
 <template>
   <div>
-    <button @click="test()">测试</button>
+    <ul>
+      <li v-for="li in list">{{li}}</li>
+    </ul>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        msg: this.$store.state.global.testData,
-      }
-    },
-    created() {
+  import globalStoreModule from '../store/modules/global'
 
+  export default {
+    name: 'index',
+    asyncData({store, route}) {
+      store.registerModule('global', globalStoreModule);
+      return store.dispatch('global/fetchItem')
     },
-    methods:{
-      test(){
-        this.axios.post('/api/test',{name:'张三'}).then(res => {
-          console.log(res.data)
-        });
+    destroyed() {
+      console.log('index实例被销毁');
+      this.$store.unregisterModule('global')
+    },
+    computed: {
+      list() {
+        return this.$store.state.global.testData
       }
     }
   }
 </script>
+
+<style lang="scss">
+  ul > li {
+    font-size: 16px;
+    color: red;
+  }
+</style>
