@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { createStore } from './store'
-import { createRouter } from './router'
-import { sync } from 'vuex-router-sync'
+import {createStore} from './store'
+import {createRouter} from './router'
+import {sync} from 'vuex-router-sync'
 import titleMixin from './util/title'
 import * as filters from './util/filters'
 import axios from 'axios'
+
+Vue.config.productionTip = false
 
 // minxin 处理动态标题
 Vue.mixin(titleMixin)
@@ -26,16 +28,14 @@ axios.interceptors.request.use((config) => {
 });
 
 // http response 拦截器
-axios.interceptors.response.use(
-  response => {
-    return response;
-  },
-  error => {
-    if (error.response) {
-      // console.log(error.response.status)
-    }
-    return Promise.reject(error.response.data)
-  });
+axios.interceptors.response.use(response => {
+  return response;
+}, error => {
+  if (error.response) {
+    // console.log(error.response.status)
+  }
+  return Promise.reject(error.response.data)
+});
 
 Vue.prototype.axios = axios
 
@@ -60,5 +60,5 @@ export function createApp() {
   //公开app，router和store。
   //注意，我们没有在这里挂载应用程序，因为引导将是
   //根据我们是在浏览器还是在服务器上而不同。
-  return { app, router, store }
+  return {app, router, store}
 }

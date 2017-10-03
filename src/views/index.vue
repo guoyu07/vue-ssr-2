@@ -1,35 +1,23 @@
 <template>
   <div>
-    <ul>
-      <li v-for="li in list">{{li}}</li>
-    </ul>
+    <p @click="text='test'">{{text}}</p>
   </div>
 </template>
 
 <script>
-  import globalStoreModule from '../store/modules/global'
-
   export default {
     name: 'index',
-    asyncData({store, route}) {
-      store.registerModule('global', globalStoreModule);
-      return store.dispatch('global/fetchItem')
-    },
-    destroyed() {
-      console.log('index实例被销毁');
-      this.$store.unregisterModule('global')
-    },
-    computed: {
-      list() {
-        return this.$store.state.global.testData
+    data() {
+      return {
+        text: ''
       }
-    }
+    },
+    created() {
+      this.text = '一万个草泥马'
+    },
+    methods: {}
   }
 </script>
 
-<style lang="scss">
-  ul > li {
-    font-size: 16px;
-    color: red;
-  }
+<style>
 </style>

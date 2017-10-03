@@ -9,9 +9,11 @@ export function createRouter() {
 
   return new Router({
     mode: 'history',
+    fallback: false,
     scrollBehavior: () => ({y: 0}),
     routes: [
-      {path: '/', component: root('index')}
+      {path: '/', component: root('index')},
+      {path: '/item', component: root('item')}
     ]
   })
 }

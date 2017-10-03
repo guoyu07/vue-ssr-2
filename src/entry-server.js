@@ -15,10 +15,10 @@ export default context => {
         store.state.cookies = context.cookies
     }
     const { url } = context
-    const fullPath = router.resolve(url).route.fullPath
+    const { fullPath } = router.resolve(url).route
 
     if (fullPath !== url) {
-      reject({ url: fullPath })
+      return reject({ url: fullPath })
     }
 
     // set router's location
@@ -29,7 +29,7 @@ export default context => {
       const matchedComponents = router.getMatchedComponents()
       // no matched routes
       if (!matchedComponents.length) {
-        reject({ code: 404 })
+        return reject({ code: 404 })
       }
       // Call fetchData hooks on components matched by the route.
       // A preFetch hook dispatches a store action and returns a Promise,
