@@ -143,6 +143,18 @@ const options = {
 
 app.use('/api', proxy(options))
 
+app.get('/getJson', (req, res) => {
+  res.json({
+    code: 1, data: [
+      {name: '张三', age: 30},
+      {name: '赵四', age: 31},
+      {name: '王五', age: 32},
+      {name: '赵六', age: 33},
+      {name: '李七', age: 34},
+    ]
+  })
+});
+
 app.get('*', isProd ? render : (req, res) => {
   readyPromise.then(() => render(req, res))
 })

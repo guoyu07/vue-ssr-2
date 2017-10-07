@@ -3,17 +3,17 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const root = (component) => () => import(`../views/${component}.vue`)
+const index = () => import('../views/index.vue')
+const item = () => import('../views/item.vue')
 
 export function createRouter() {
-
   return new Router({
     mode: 'history',
     fallback: false,
     scrollBehavior: () => ({y: 0}),
     routes: [
-      {path: '/', component: root('index')},
-      {path: '/item', component: root('item')}
+      {path: '/', component: index},
+      {path: '/item', component: item},
     ]
   })
 }

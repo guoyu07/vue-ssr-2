@@ -1,23 +1,11 @@
 <template>
   <div>
-    <p @click="text='test'">{{text}}</p>
+    <router-link to="/item">首页服务端渲染</router-link>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'index',
-    data() {
-      return {
-        text: ''
-      }
-    },
-    created() {
-      this.text = '一万个草泥马'
-    },
-    methods: {}
+    name: 'index'
   }
 </script>
-
-<style>
-</style>

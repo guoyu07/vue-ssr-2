@@ -5,7 +5,6 @@ import {createRouter} from './router'
 import {sync} from 'vuex-router-sync'
 import titleMixin from './util/title'
 import * as filters from './util/filters'
-import axios from 'axios'
 
 Vue.config.productionTip = false
 
@@ -15,29 +14,6 @@ Vue.mixin(titleMixin)
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-
-axios.defaults.timeout = 5000
-
-// http request 拦截器
-axios.interceptors.request.use((config) => {
-  // 发送请求前
-  return config;
-}, error => {
-  // 请求发生错误
-  return Promise.reject(error);
-});
-
-// http response 拦截器
-axios.interceptors.response.use(response => {
-  return response;
-}, error => {
-  if (error.response) {
-    // console.log(error.response.status)
-  }
-  return Promise.reject(error.response.data)
-});
-
-Vue.prototype.axios = axios
 
 export function createApp() {
 
