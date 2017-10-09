@@ -26,9 +26,7 @@ export default {
         params,
         timeout: 100000
       }).then(res => {
-        setTimeout(() => {
-          resolve(res.data);
-        }, 3000)
+        resolve(res.data);
       }).catch(error => {
         reject(error);
       });
