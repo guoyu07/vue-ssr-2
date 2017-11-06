@@ -15,7 +15,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'public': path.resolve(__dirname, '../public')
+      'public': path.resolve(__dirname, '../public'),
+      '~server': path.resolve(__dirname, '../src/api/create-api-server')
     }
   },
   module: {
@@ -54,7 +55,7 @@ module.exports = {
   },
   plugins: isProd ? [
     new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false }
+      compress: {warnings: false}
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new ExtractTextPlugin({

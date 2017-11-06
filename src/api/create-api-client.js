@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from './config-client'
 
 axios.interceptors.request.use((config) => {
   return config;
@@ -19,17 +20,19 @@ export default {
    * @param params
    */
   get(url, params) {
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'get',
-        url,
-        params,
-        timeout: 100000
-      }).then(res => {
-        resolve(res.data);
-      }).catch(error => {
-        reject(error);
-      });
-    })
+    return axios({
+      method: 'get',
+      url,
+      params,
+      timeout: 100000
+    }).then(res => res.data)
+  },
+  post(url, data) {
+    return axios({
+      method: 'post',
+      url: config.api + url,
+      data,
+      timeout: config.timeout,
+    }).then(res => res.data)
   }
 }

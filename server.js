@@ -110,6 +110,8 @@ function render(req, res) {
   }
 
   const context = {
+    req,
+    cookies: req.cookies,
     title: 'vue-ssr 2.0', // default title
     url: req.url
   }
@@ -127,8 +129,10 @@ function render(req, res) {
   })
 }
 
+// 代理请求 'http://localhost:8080'
+// 根据相应情况，更换成你需要代理的地址(默认同域)
 const options = {
-  target: 'http://localhost:8081',
+  target: 'http://localhost:8080',
   changeOrigin: true,
   ws: true,
   pathRewrite: {
@@ -137,7 +141,7 @@ const options = {
   router: {
     // when request.headers.host == 'dev.localhost:3000',
     // override target 'http://www.example.org' to 'http://localhost:8000'
-    'dev.localhost:8080': 'http://localhost:8081'
+    'dev.localhost:8080': 'http://localhost:8080'
   }
 }
 

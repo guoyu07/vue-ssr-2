@@ -1,4 +1,4 @@
-import { createApp } from './app'
+import {createApp} from './app'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -10,15 +10,15 @@ const isDev = process.env.NODE_ENV !== 'production'
 export default context => {
   return new Promise((resolve, reject) => {
     const s = isDev && Date.now()
-    const { app, router, store } = createApp()
-    if (context.cookies) {
-        store.state.cookies = context.cookies
+    const {app, router, store} = createApp()
+    if (context.req.cookies) {
+      store.state.cookies = context.req.cookies
     }
-    const { url } = context
-    const { fullPath } = router.resolve(url).route
+    const {url} = context
+    const {fullPath} = router.resolve(url).route
 
     if (fullPath !== url) {
-      return reject({ url: fullPath })
+      return reject({url: fullPath})
     }
 
     // set router's location
@@ -29,15 +29,16 @@ export default context => {
       const matchedComponents = router.getMatchedComponents()
       // no matched routes
       if (!matchedComponents.length) {
-        return reject({ code: 404 })
+        return reject({code: 404})
       }
       // Call fetchData hooks on components matched by the route.
       // A preFetch hook dispatches a store action and returns a Promise,
       // which is resolved when the action is complete and store state has been
       // updated.
-      Promise.all(matchedComponents.map(({ asyncData }) => asyncData && asyncData({
+      Promise.all(matchedComponents.map(({asyncData}) => asyncData && asyncData({
         store,
-        route: router.currentRoute
+        route: router.currentRoute,
+        cookies: context.req.cookies
       }))).then(() => {
         isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`)
         // After all preFetch hooks are resolved, our store is now
